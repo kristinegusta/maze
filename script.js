@@ -31,7 +31,7 @@ const addGameDivs = (level,board) => {
         }
     }
 } 
-// CREATING THE FIRST GAME BOARD
+// Creating/updating the game board
 const startBoard = (level) => {
     let board = document.createElement("div")
     board.classList.add("board")
@@ -40,25 +40,29 @@ const startBoard = (level) => {
     document.querySelector("main").appendChild(board)
     addGameDivs(level,board) 
 }
-// DELETE OLD BOARD
+// delete the board
 const deleteOldBoard = () => {
     let main = document.querySelector("main")
     main.innerHTML = ""
 }
-//create a function to move the player
-//manipulate the array and rewrite the board? get the coordinates of the player?, check if new coordinates is a wall
+// function for switching levels once the maze is completed
+const nextLevel = () => {
+    alert("YOU WON")
+    if(currentLevel<levelArray.length-1) {
+            deleteOldBoard()
+            currentLevel++
+            startBoard(levelArray[currentLevel])
+            }
+}
+
+//a function to move the player aka change coordinates of S in the LEVEL array  . Move player, if new coordinates is not a wall
 
 const movePlayerUp = (level) => {
     //this scenario if level[x-1][y] (new) != "*" (wall)
     if(level[x-1][y] != "*"){
         //check if its treasure and only make a move if its not
         if(level[x-1][y] == "T") {
-            alert("YOU WON")
-            if(currentLevel<levelArray.length-1) {
-                deleteOldBoard()
-                currentLevel++
-                startBoard(levelArray[currentLevel])
-            }
+            nextLevel()
         }
         else {
             level[x][y] = "." //the old player position becomes a path
@@ -72,12 +76,7 @@ const movePlayerUp = (level) => {
 const movePlayerDown = (level) => { 
     if(level[x+1][y] != "*") {
         if(level[x+1][y] == "T") {
-            alert("YOU WON")
-            if(currentLevel<levelArray.length-1) {
-                deleteOldBoard()
-                currentLevel++
-                startBoard(levelArray[currentLevel])
-            }
+            nextLevel()
         }
         else {
             level[x][y] = "." 
@@ -91,12 +90,7 @@ const movePlayerDown = (level) => {
 const movePlayerRight = (level) => { 
     if(level[x][y+1] != "*") {
         if(level[x][y+1] == "T") {
-            alert("YOU WON")
-            if(currentLevel<levelArray.length-1) {
-                deleteOldBoard()
-                currentLevel++
-                startBoard(levelArray[currentLevel])
-            }
+            nextLevel()
         }
         else {
             level[x][y] = "." 
@@ -110,12 +104,7 @@ const movePlayerRight = (level) => {
 const movePlayerLeft = (level) => { 
     if(level[x][y-1] != "*") {
         if(level[x][y-1] == "T") {
-            alert("YOU WON")
-            if(currentLevel<levelArray.length-1) {
-                deleteOldBoard()
-                currentLevel++
-                startBoard(levelArray[currentLevel])
-            }
+            nextLevel()
         } else {
             level[x][y] = "." 
             y = y-1  
